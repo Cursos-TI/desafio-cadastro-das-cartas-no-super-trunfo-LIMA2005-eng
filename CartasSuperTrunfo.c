@@ -1,22 +1,56 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
-// Desafio Super Trunfo - Países
-// Tema 1 - Cadastro das Cartas
-// Este código inicial serve como base para o desenvolvimento do sistema de cadastro de cartas de cidades.
-// Siga os comentários para implementar cada parte do desafio.
-//Teste larissa
+// Definição da estrutura para representar um país
+typedef struct {
+    char nome[50];
+    int area;
+    int populacao;
+    float idh;
+} Pais;
 
+// Função para criar uma carta (objeto Pais)
+Pais cria_carta(const char *nome, int area, int populacao, float idh) {
+    Pais carta;
+    strcpy(carta.nome, nome);
+    carta.area = area;
+    carta.populacao = populacao;
+    carta.idh = idh;
+    return carta;
+}
+
+// Função para embaralhar as cartas
+void embaralha_cartas(Pais cartas[], int num_cartas) {
+    srand(time(NULL)); // Inicializa o gerador de números aleatórios com a hora atual
+    for (int i = 0; i < num_cartas; i++) {
+        int j = rand() % num_cartas;
+        Pais temp = cartas[i];
+        cartas[i] = cartas[j];
+        cartas[j] = temp;
+    }
+}
+
+// Função principal (simulando um jogo)
 int main() {
-    // Sugestão: Defina variáveis separadas para cada atributo da cidade.
-    // Exemplos de atributos: código da cidade, nome, população, área, PIB, número de pontos turísticos.
-    
-    // Cadastro das Cartas:
-    // Sugestão: Utilize a função scanf para capturar as entradas do usuário para cada atributo.
-    // Solicite ao usuário que insira as informações de cada cidade, como o código, nome, população, área, etc.
-    
-    // Exibição dos Dados das Cartas:
-    // Sugestão: Utilize a função printf para exibir as informações das cartas cadastradas de forma clara e organizada.
-    // Exiba os valores inseridos para cada atributo da cidade, um por linha.
+    // Criando algumas cartas (países)
+    Pais cartas[4]; // Exemplo com 4 cartas
+    cartas[0] = cria_carta("Brasil", 8515767, 210000000, 0.76);
+    cartas[1] = cria_carta("Estados Unidos", 9833520, 330000000, 0.94);
+    cartas[2] = cria_carta("China", 9706961, 1400000000, 0.76);
+    cartas[3] = cria_carta("Alemanha", 357022, 83000000, 0.94);
+
+    // Embaralhando as cartas
+    embaralha_cartas(cartas, 4);
+
+    // Exibindo as cartas embaralhadas (para verificar)
+    printf("Cartas Embaralhadas:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("%s - Area: %d - Populacao: %d - IDH: %.2f\n", cartas[i].nome, cartas[i].area, cartas[i].populacao, cartas[i].idh);
+    }
+
+    // Implementação da lógica do jogo (em um próximo passo)
 
     return 0;
 }
