@@ -65,7 +65,7 @@ void listarCidades(Cidade cidades[], int totalCidades) {
     printf("\nLista de Cidades:\n");
     for (int i = 0; i < totalCidades; i++) {
         printf("-----------------------------\n");
-        printf("Código: %s\n", cidades[i].codigo);Add commentMore actions;
+        printf("Código: %s\n", cidades[i].codigo);
         printf("Nome: %s\n", cidades[i].nome);
         printf("População: %d\n", cidades[i].populacao);
         printf("Área: %.2f km²\n", cidades[i].area);
