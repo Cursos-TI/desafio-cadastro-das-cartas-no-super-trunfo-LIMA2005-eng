@@ -1,78 +1,95 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#define MAX_CIDADES 32 // 8 estados * 4 cidades
+int main()
+{
+    // carta 01
+    char estado1;
+    char codigocarta1[6];
+    char nomecidade1[50];
+    int populacao1, pontostur1;
+    float pib1, area_km1;
 
-// Estrutura para armazenar informações das cidades
-typedef struct {
-    char codigo[4]; // Código da cidade (Ex: "A01")
-    char nome[50]; // Nome da cidade
-    int populacao; // População da cidade
-    float area; // Área da cidade em km²
-    float pib; // PIB da cidade em bilhões
-    int pontos_turisticos; // Número de pontos turísticos
-    float densidade_populacional; // Calculado como população / área
-    float pib_per_capita; // Calculado como PIB / população
-} Cidade;
+     // carta 02
+     char estado2;
+     char codigocarta2[6];
+     char nomecidade2[50];
+     int populacao2, pontostur2;
+     float pib2, area_km2;
 
-// Função para cadastrar uma nova cidade
-void cadastrarCidades(Cidade cidades[], int *totalCidades) {
-    if (*totalCidades >= MAX_CIDADES) { // Verifica se atingiu o limite de cidades
-        printf("\nLimite de cidades atingido!\n");
-        return;
-    }
+     
+     // Corresponde a Carta 01
+    printf("Primeiramente iremos inserir as informações correspondentes a Carta 01!! \n");
+
+    printf("Digite uma letra maiúscula entre A e H (ela irá corresponder à carta 01): \n");
+    scanf(" %c", &estado1);
+
+    printf("Digite o codigo da carta (sendo o código correspondente a letra inserida anteriormente + um numero de 01 a 04): \n");
+    scanf(" %s", &codigocarta1);
+
+    printf("Digite o nome da cidade que a carta corresponderá: \n");
+    scanf(" %s", &nomecidade1);
+
+    printf("Digite a quantidade da populacao dessa cidade: \n");
+    scanf(" %i", &populacao1);
+
+    printf("Digite a area em km2 da cidade: \n");
+    scanf(" %f", &area_km1);
+
+    printf("Digite o pib da cidade: \n");
+    scanf(" %f", &pib1);
+
+    printf("Digite o numero de pontos turisticos da cidade: \n");
+    scanf(" %i", &pontostur1);
+
+    printf("OK! Você já inseriu os dados da carta 01.");
     
-    Cidade nova;
-    printf("\nDigite o código da cidade (Ex: A01, B02): ");
-    scanf(" %3s", nova.codigo);
+    // Corresponde a Carta 02
     
-    printf("Nome da cidade: ");
-    getchar(); // Limpa buffer do teclado
-    fgets(nova.nome, sizeof(nova.nome), stdin);
-    nova.nome[strcspn(nova.nome, "\n")] = '\0'; // Remove a quebra de linha do nome
+    printf("Agora iremos inserir as informações correspondentes a Carta 02!! \n");
+
+    printf("Digite uma letra maiúscula entre A e H (ela irá corresponder à carta 02): \n");
+    scanf(" %c", &estado2);
+
+    printf("Digite o codigo da carta (sendo o código correspondente a letra inserida anteriormente + um numero de 01 a 04): \n");
+    scanf(" %s", &codigocarta2);
+
+    printf("Digite o nome da cidade que a carta corresponderá: \n");
+    scanf(" %s", &nomecidade2);
+
+    printf("Digite a quantidade da populacao dessa cidade: \n");
+    scanf(" %i", &populacao2);
+
+    printf("Digite a area em km2 da cidade: \n");
+    scanf(" %f", &area_km2);
+
+    printf("Digite o pib da cidade: \n");
+    scanf(" %f", &pib2);
+
+    printf("Digite o numero de pontos turisticos da cidade: \n");
+    scanf(" %i", &pontostur2);
+
+    printf("OK! Todas as informações ja foram preenchidas. As cartas correspondentes sao: \n");
+
+    // Carta 01
+
+    printf("Carta 01: \n");
+    printf("Estado: %c \n", estado1);
+    printf("Codigo: %s \n", codigocarta1);
+    printf("Nome da cidade: %s \n", nomecidade1);
+    printf("Quantidade da populacao: %i \n", populacao1);
+    printf("Area em km2: %f \n", area_km1);
+    printf("Pib da cidade: %f \n", pib1);
+    printf("Quantidade de pontos turisticos: %i \n", pontostur1);
+
+    // Carta 02
+
     
-    printf("População: ");
-    scanf("%d", &nova.populacao);
-    
-    printf("Área (km²): ");
-    scanf("%f", &nova.area);
-    
-    printf("PIB (em bilhões): ");
-    scanf("%f", &nova.pib);
-    
-    printf("Número de pontos turísticos: ");
-    scanf("%d", &nova.pontos_turisticos);
-    
-    // Cálculo das novas propriedades
-    nova.densidade_populacional = nova.populacao / nova.area;
-    nova.pib_per_capita = (nova.pib * 1000000000) / nova.populacao; // Convertendo PIB de bilhões para unidade monetária
-    
-    // Adiciona a nova cidade ao array
-    cidades[*totalCidades] = nova;
-    (*totalCidades)++;
-    
-    printf("\nCidade cadastrada com sucesso!\n");
+    printf("Carta 02: \n");
+    printf("Estado: %c \n", estado2);
+    printf("Codigo: %s \n", codigocarta2);
+    printf("Nome da cidade: %s \n", nomecidade2);
+    printf("Quantidade da populacao: %i \n", populacao2);
+    printf("Area em km2: %f \n", area_km2);
+    printf("Pib da cidade: %f \n", pib2);
+    printf("Quantidade de pontos turisticos: %i \n", pontostur2);
 }
-
-// Função para listar todas as cidades cadastradas
-void listarCidades(Cidade cidades[], int totalCidades) {
-    if (totalCidades == 0) { // Verifica se há cidades cadastradas
-        printf("\nNenhuma cidade cadastrada.\n");
-        return;
-    }
-    
-    printf("\nLista de Cidades:\n");
-    for (int i = 0; i < totalCidades; i++) {
-        printf("-----------------------------\n");
-        printf("Código: %s\n", cidades[i].codigo);
-        printf("Nome: %s\n", cidades[i].nome);
-        printf("População: %d\n", cidades[i].populacao);
-        printf("Área: %.2f km²\n", cidades[i].area);
-        printf("PIB: %.2f bilhões\n", cidades[i].pib);
-        printf("Pontos turísticos: %d\n", cidades[i].pontos_turisticos);
-        printf("Densidade Populacional: %.2f hab/km²\n", cidades[i].densidade_populacional);
-        printf("PIB per capita: %.2f\n", cidades[i].pib_per_capita);
-
-        return 0;
-    }
