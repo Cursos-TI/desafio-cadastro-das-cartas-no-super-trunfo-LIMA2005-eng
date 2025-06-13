@@ -4,91 +4,129 @@
 // Estrutura representando um país
 typedef struct {
     char nome[30];
-    int populacao; // em milhões
-    float area;    // em mil km²
-    float pib;     // em trilhões USD
+    int populacao;            // em milhões
+    float area;               // em mil km²
+    float pib;                // em trilhões USD
+    int pontosTuristicos;     // número de pontos turísticos
+    float densidade;          // habitantes por km²
 } Pais;
 
-// Função para mostrar os dados do país
+// Função auxiliar para imprimir os nomes dos atributos
+const char* nomeAtributo(int atributo) {
+    switch(atributo) {
+        case 1: return "População";
+        case 2: return "Área";
+        case 3: return "PIB";
+        case 4: return "Pontos Turísticos";
+        case 5: return "Densidade Demográfica";
+        default: return "Desconhecido";
+    }
+}
+
+// Retorna o valor numérico de um atributo genérico
+float obterValor(Pais p, int atributo) {
+    switch(atributo) {
+        case 1: return (float)p.populacao;
+        case 2: return p.area;
+        case 3: return p.pib;
+        case 4: return (float)p.pontosTuristicos;
+        case 5: return p.densidade;
+        default: return 0;
+    }
+}
+
+// Exibe dados do país
 void mostrarPais(Pais p) {
     printf("País: %s\n", p.nome);
     printf("População: %d milhões\n", p.populacao);
     printf("Área: %.2f mil km²\n", p.area);
     printf("PIB: %.2f trilhões USD\n", p.pib);
+    printf("Pontos turísticos: %d\n", p.pontosTuristicos);
+    printf("Densidade demográfica: %.2f hab/km²\n", p.densidade);
 }
 
-// Função para comparar os países com base em um atributo
-void comparar(Pais jogador, Pais computador, int atributo) {
-    printf("\n--- Comparando Países ---\n");
-    printf("\nVocê escolheu:\n");
-    mostrarPais(jogador);
+// Compara dois atributos e exibe resultados
+void compararAtributos(Pais p1, Pais p2, int a1, int a2) {
+    float v1_p1 = obterValor(p1, a1);
+    float v1_p2 = obterValor(p2, a1);
+    float v2_p1 = obterValor(p1, a2);
+    float v2_p2 = obterValor(p2, a2);
 
-    printf("\nOponente (computador):\n");
-    mostrarPais(computador);
+    int pontos_p1 = 0, pontos_p2 = 0;
 
-    printf("\nResultado: ");
+    printf("\n--- COMPARAÇÃO DOS ATRIBUTOS ---\n");
 
-    switch(atributo) {
-        case 1: // População
-            if (jogador.populacao > computador.populacao)
-                printf("Você venceu!\n");
-            else if (jogador.populacao < computador.populacao)
-                printf("Computador venceu!\n");
-            else
-                printf("Empate!\n");
-            break;
-        case 2: // Área
-            if (jogador.area > computador.area)
-                printf("Você venceu!\n");
-            else if (jogador.area < computador.area)
-                printf("Computador venceu!\n");
-            else
-                printf("Empate!\n");
-            break;
-        case 3: // PIB
-            if (jogador.pib > computador.pib)
-                printf("Você venceu!\n");
-            else if (jogador.pib < computador.pib)
-                printf("Computador venceu!\n");
-            else
-                printf("Empate!\n");
-            break;
-        default:
-            printf("Atributo inválido!\n");
+    for (int i = 0; i < 2; i++) {
+        int atributo = (i == 0) ? a1 : a2;
+        float valor1 = (i == 0) ? v1_p1 : v2_p1;
+        float valor2 = (i == 0) ? v1_p2 : v2_p2;
+
+        printf("\nAtributo: %s\n", nomeAtributo(atributo));
+        printf("%s: %.2f\n", p1.nome, valor1);
+        printf("%s: %.2f\n", p2.nome, valor2);
+
+        if (atributo == 5) { // Densidade: MENOR vence
+            if (valor1 < valor2) pontos_p1++;
+            else if (valor1 > valor2) pontos_p2++;
+        } else {
+            if (valor1 > valor2) pontos_p1++;
+            else if (valor1 < valor2) pontos_p2++;
+        }
     }
+
+    float soma_p1 = v1_p1 + v2_p1;
+    float soma_p2 = v1_p2 + v2_p2;
+
+    printf("\n--- SOMA DOS ATRIBUTOS ---\n");
+    printf("%s: %.2f\n", p1.nome, soma_p1);
+    printf("%s: %.2f\n", p2.nome, soma_p2);
+
+    printf("\n=== RESULTADO FINAL ===\n");
+    if (soma_p1 > soma_p2)
+        printf("Vencedor: %s\n", p1.nome);
+    else if (soma_p1 < soma_p2)
+        printf("Vencedor: %s\n", p2.nome);
+    else
+        printf("Empate!\n");
 }
 
 int main() {
-    Pais brasil = {"Brasil", 214, 8516.0, 2.0};
-    Pais alemanha = {"Alemanha", 83, 357.0, 4.5};
+    Pais brasil = {"Brasil", 214, 8516.0, 2.0, 65, 25.1};
+    Pais alemanha = {"Alemanha", 83, 357.0, 4.5, 90, 232.5};
 
-    int escolhaPais, atributo;
-    Pais jogador, computador;
+    int attr1 = 0, attr2 = 0;
 
-    printf("=== Super Trunfo: Brasil x Alemanha ===\n");
-    printf("Escolha seu país:\n");
-    printf("1. Brasil\n");
-    printf("2. Alemanha\n");
-    printf("Digite 1 ou 2: ");
-    scanf("%d", &escolhaPais);
+    printf("=== SUPER TRUNFO: BRASIL x ALEMANHA ===\n\n");
 
-    if (escolhaPais == 1) {
-        jogador = brasil;
-        computador = alemanha;
-    } else if (escolhaPais == 2) {
-        jogador = alemanha;
-        computador = brasil;
-    } else {
-        printf("Escolha inválida.\n");
-        return 1;
-    }
+    printf("Sua carta:\n");
+    mostrarPais(brasil);
+    printf("\nCarta do computador:\n");
+    mostrarPais(alemanha);
 
-    printf("\nEscolha um atributo para competir:\n");
-    printf("1. População\n2. Área\n3. PIB\n");
-    printf("Digite 1, 2 ou 3: ");
-    scanf("%d", &atributo);
+    // Menu para escolha do primeiro atributo
+    printf("\nEscolha o PRIMEIRO atributo para comparar:\n");
+    printf("1 - População\n");
+    printf("2 - Área\n");
+    printf("3 - PIB\n");
+    printf("4 - Pontos Turísticos\n");
+    printf("5 - Densidade Demográfica\n");
+    printf("Digite sua escolha: ");
+    scanf("%d", &attr1);
 
-    comparar(jogador, computador, atributo);
+    // Menu para escolha do segundo atributo (dinâmico)
+    do {
+        printf("\nEscolha o SEGUNDO atributo para comparar (diferente do primeiro):\n");
+        for (int i = 1; i <= 5; i++) {
+            if (i != attr1)
+                printf("%d - %s\n", i, nomeAtributo(i));
+        }
+        printf("Digite sua escolha: ");
+        scanf("%d", &attr2);
+        if (attr2 == attr1)
+            printf("Você já escolheu esse atributo. Tente outro.\n");
+    } while (attr2 == attr1 || attr2 < 1 || attr2 > 5);
+
+    compararAtributos(brasil, alemanha, attr1, attr2);
 
     return 0;
 }
